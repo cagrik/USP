@@ -1,0 +1,22 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:USP"
+    x:Class="App1.MainPage"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="g1">
+        <Button Content="Simple Payment Sample" Margin="38,38,0,0" VerticalAlignment="Top" Height="51" Width="196" Click="Button_Click"/>
+        <Button Content="Point of Sale" Margin="249,38,0,0" VerticalAlignment="Top" Height="51" Width="196" Click="Button_Click_1"/>
+        <Button Content="In-app Purchase" Margin="473,38,0,0" VerticalAlignment="Top" Height="51" Width="196" Click="Button_Click_2"/>
+        <Button Content="Point of Sale with User Control" Margin="38,132,0,0" VerticalAlignment="Top" Height="51" Width="218" Click="Button_Click_3"/>
+
+
+
+
+    </Grid>
+</Page>

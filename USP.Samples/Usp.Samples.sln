@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSolPay.WinForms", "UniSolPay.WinForms\UniSolPay.WinForms.csproj", "{D1BA3C40-D425-4482-865D-EA9F9AD543BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSolPay.WinForms.NetFramework", "UniSolPay.WinForms.NetFramework\UniSolPay.WinForms.NetFramework.csproj", "{4203CDD0-6FB7-44B2-8D51-D2678C0E5950}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1BA3C40-D425-4482-865D-EA9F9AD543BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1BA3C40-D425-4482-865D-EA9F9AD543BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1BA3C40-D425-4482-865D-EA9F9AD543BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1BA3C40-D425-4482-865D-EA9F9AD543BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4203CDD0-6FB7-44B2-8D51-D2678C0E5950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4203CDD0-6FB7-44B2-8D51-D2678C0E5950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4203CDD0-6FB7-44B2-8D51-D2678C0E5950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4203CDD0-6FB7-44B2-8D51-D2678C0E5950}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D367326-1A32-4D3A-9E7B-BB3A58EACCE4}
+	EndGlobalSection
+EndGlobal

@@ -12,10 +12,12 @@ namespace UniSolPay.WinForms
         bool isFinalized = false;
         List<Payments> _payments;
         string refKey = String.Empty;
+        List<PaymentRequest> paymentRequests;
         public Form1()
         {
             InitializeComponent();
             _payments = new List<Payments>();
+            paymentRequests = new List<PaymentRequest>();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -70,7 +72,7 @@ namespace UniSolPay.WinForms
             p.Status = "Requested";
             p.RefKey = refKey;
             _payments.Add(p);
-
+            paymentRequests.Add(pr);
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = _payments;
 
@@ -81,34 +83,42 @@ namespace UniSolPay.WinForms
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-            RpcClient rpc = new RpcClient(pr.cluster);
-            var res = rpc.getSignaturesForAddress(pr.Reference);
-
-            if (res.result != null && res.result.Length > 0) signature = res.result[0].signature;
-            if (String.IsNullOrEmpty(signature)) { }
-            else
+            var incompletedPayments = _payments.Where(x => x.Status == "Requested").ToList();
+            if (incompletedPayments.Count < 1) { timer1.Stop(); }
+            foreach (var item in incompletedPayments)
             {
+                var _pr = paymentRequests.SingleOrDefault(x => x.Reference == item.RefKey);
+                if (_pr == null) { 
+                    return; }
+                RpcClient rpc = new RpcClient(_pr.cluster);
+                var res = rpc.getSignaturesForAddress(_pr.Reference);
 
-                if (isFinalized)
-                {
-                    bool isCompleted = await pr.isFullPayment(signature);
-                    if (isCompleted)
-                    {
-
-                        timer1.Stop();
-                        //  lblPaymentStatus.Text = "The Payment is completed.";
-                        var pyr = _payments.Where(x => x.RefKey == pr.Reference).SingleOrDefault();
-                        pyr.Status = "Completed";
-
-                        dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = _payments;
-
-                    }
-                }
+                if (res.result != null && res.result.Length > 0) signature = res.result[0].signature;
+                if (String.IsNullOrEmpty(signature)) { }
                 else
                 {
-                    isFinalized = await pr.isFinalized(signature);
 
+                    if (isFinalized)
+                    {
+                        bool isCompleted = await _pr.isFullPayment(signature);
+                        if (isCompleted)
+                        {
+
+                           // timer1.Stop();
+                            //  lblPaymentStatus.Text = "The Payment is completed.";
+                            var pyr = _payments.Where(x => x.RefKey == _pr.Reference).SingleOrDefault();
+                            pyr.Status = "Completed";
+                            paymentRequests.Remove(_pr);
+                            dataGridView1.DataSource = null;
+                            dataGridView1.DataSource = _payments;
+
+                        }
+                    }
+                    else
+                    {
+                        isFinalized = await _pr.isFinalized(signature);
+
+                    }
                 }
             }
         }

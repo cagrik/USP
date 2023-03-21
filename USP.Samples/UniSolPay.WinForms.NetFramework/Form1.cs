@@ -93,9 +93,14 @@ namespace UniSolPay.WinForms.NetFramework
         private async void timer1_Tick(object sender, EventArgs e)
         {
             var incompletedPayments = _payments.Where(x=>x.Status=="Requested").ToList();
+            if (incompletedPayments.Count < 1) { timer1.Stop(); }
             foreach (var item in incompletedPayments)
             {
                 var _pr = paymentRequests.SingleOrDefault(x=>x.Reference==item.RefKey);
+                if (_pr == null)
+                {
+                    return;
+                }
                 RpcClient rpc = new RpcClient(_pr.cluster);
                 var res = rpc.getSignaturesForAddress(_pr.Reference);
 
@@ -110,9 +115,9 @@ namespace UniSolPay.WinForms.NetFramework
                         if (isCompleted)
                         {
 
-                            timer1.Stop();
+                           
                             //  lblPaymentStatus.Text = "The Payment is completed.";
-                            var pyr = _payments.Where(x => x.RefKey == item.RefKey).SingleOrDefault();
+                            var pyr = _payments.Where(x => x.RefKey == _pr.Reference).SingleOrDefault();
                             pyr.Status = "Completed";
                             paymentRequests.Remove(_pr);
                             dataGridView1.DataSource = null;
@@ -122,7 +127,7 @@ namespace UniSolPay.WinForms.NetFramework
                     }
                     else
                     {
-                        isFinalized = await pr.isFinalized(signature);
+                        isFinalized = await _pr.isFinalized(signature);
 
                     }
                 } 

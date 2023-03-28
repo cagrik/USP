@@ -89,7 +89,7 @@ namespace USP.Utilities
             }
             return r;
         }
-        //Check the received amount which is same with created payment request link(prevent to manipulate qr codes)
+        //Check the received amount and Reciever Wallet address which is same with created payment request link(prevent to manipulate qr codes)
         public async Task<bool> isFullPayment(string signature)
         {
             bool r = false;
@@ -103,6 +103,11 @@ namespace USP.Utilities
                     double fk = Convert.ToDouble(fark);
                     double solSend = fk / 1000000000;
                     r = solSend == Amount;
+                    if (!result.result.transaction.message.accountKeys.Contains(Recipient))
+                    {
+                        r = false;
+
+                    }
                 }
             }
             catch (Exception)
